@@ -19,6 +19,19 @@ namespace Lab_1
                 File.AppendAllText(finalPath, symbol);
             }
         }
-        
+
+        public void ToBinFile(string k, string fileName)
+        {
+            BinaryWriter bwStream = new BinaryWriter(new FileStream(fileName, FileMode.Create));
+
+            Encoding ascii = Encoding.ASCII;
+            BinaryWriter bwEncoder = new BinaryWriter(new FileStream(fileName, FileMode.Create), ascii);
+            using (BinaryWriter binWriter =
+               new BinaryWriter(File.Open(fileName, FileMode.Create)))
+            {
+                // Write string   
+                binWriter.Write(k);
+            }
+        }
     }
 }
