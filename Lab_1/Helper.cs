@@ -18,7 +18,6 @@ namespace Lab_1
             return a.GroupBy(_ => counter++ / chanks).Select(v => v.ToList());
         }
 
-
         public List<int[]> Permutation(List<int[]> z)
         {
             List<int[]> result = new List<int[]>();

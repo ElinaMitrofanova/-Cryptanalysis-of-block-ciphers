@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,19 +22,6 @@ namespace Lab_1
 
         List<int[]> x =new List<int[]>();
         double[] b = new double[(int)Math.Pow(2, 16)];
-        //public void GenerateAllBinaryStrings(int n,int[] arr, int i)
-        //{
-        //    if (i == n)
-        //    {
-        //        x.Add(arr);
-        //        return;
-        //    }
-        //    arr[i] = 0;
-        //    GenerateAllBinaryStrings(n, arr, i + 1);
-
-        //    arr[i] = 1;
-        //    GenerateAllBinaryStrings(n, arr, i + 1);
-        //}
 
         public void Vectora(int n)
         {
@@ -49,12 +35,6 @@ namespace Lab_1
                 {
                     binary_string = "0" + binary_string;
                 }
-                //for (int j = 0; j < binary_string.Length; j++)
-                //{
-                //    if (binary_string[j] == '0') { vector.Add(0); }
-                //    if (binary_string[j] == '1') { vector.Add(1); }
-                //}
-
                 vector = binary_string.Select(s => int.Parse(s.ToString())).ToArray();
                 x.Add(vector);
             }
@@ -143,13 +123,6 @@ namespace Lab_1
                 }
                 Console.WriteLine(i);
             }
-
-            
-          
-        }
-        public void Search()
-        {
-
         }
         public void General()
         {
@@ -162,12 +135,6 @@ namespace Lab_1
             //    t.Start();
             //    Console.WriteLine(t.ThreadState);
             //}
-
-            var last = splittedArray.Last();
-            Temp(last);
-
-
-            //CountDif();
         }
     }
 }

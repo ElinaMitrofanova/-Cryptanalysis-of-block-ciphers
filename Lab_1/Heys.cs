@@ -6,16 +6,8 @@ namespace Lab_1
 {
     internal class Heys
     {
-        Logicrithmetic _logicrithmetic;
-        Helper _helper;
-        public Heys()
-        {
-            _logicrithmetic = new Logicrithmetic();
-            _helper = new Helper();
-        }
         private int[] key = new int[112];
        
-
         public int[] plainText = new int[16];
 
         public string[] S = new string[16] { "F", "0", "E", "6", "8", "D", "5", "9", "A", "3", "1", "C", "4", "B", "7", "2" };
@@ -24,6 +16,14 @@ namespace Lab_1
 
         public List<List<int[]>> result = new List<List<int[]>>();
 
+        Logicrithmetic _logicrithmetic;
+        Helper _helper;
+
+        public Heys()
+        {
+            _logicrithmetic = new Logicrithmetic();
+            _helper = new Helper();
+        }
         public void GenerateBits(int[] array)
         {
             Random random = new Random();
@@ -54,27 +54,6 @@ namespace Lab_1
             return sx_strBinary;
         }
 
-        //public List<int[]> Permutation(List<int[]> z)
-        //{
-        //    List<int[]> result = new List<int[]>();
-        //    for (int i = 0; i < 4; i++)
-        //    {
-        //        int[] temp = new int[4];
-        //        result.Add(temp);
-        //    }
-
-        //    for (int j = 0; j < 4; j++)
-        //    {
-        //        var fragment_j = z[j];
-        //        for (int i = 0; i < 4; i++)
-        //        {
-        //            var bit = fragment_j[i];
-        //            result[i][j] = bit;
-        //        }
-        //    }
-        //    return result;
-        //}
-
         public int[] OneRound(int[] y)
         {
             var yChanks = _helper.SplitArray(y, 4);
@@ -88,6 +67,22 @@ namespace Lab_1
             z = _helper.Permutation(z);
             return z.SelectMany(x => x).ToArray();
         }
+
+        public int[] ReverseRound(int[] k, int[] C)
+        {
+            var C_Chanks = _helper.SplitArray(C, 4).ToList();
+            List<int[]> C_perm = _helper.Permutation(C_Chanks);
+            List<int[]> C_Sbox = new List<int[]>();
+            foreach (var C_permChank in C_perm)
+            {
+                var sx_strBinary = SX(string.Join("", C_perm));
+                var sx = sx_strBinary.Select(n => int.Parse(n.ToString())).ToArray();
+                C_Sbox.Add(sx);
+            }
+            var C_Sbox_arr = C_Sbox.SelectMany(x => x).ToArray();
+            int[] p = _logicrithmetic.XOR(k, C_Sbox_arr);
+            return p;
+        }
         public int[] SixRounds(int[] plainText)
         {
             var firstRoundKEys = roundKeys.Take(roundKeys.Count() - 1);
@@ -95,16 +90,6 @@ namespace Lab_1
             foreach (var roundKey in firstRoundKEys)
             {
                 int[] y = _logicrithmetic.XOR(roundKey, result_round);
-                //var yChanks = _helper.SplitArray(y, 4);
-                //List<int[]> z = new List<int[]>();
-                //foreach (var yChank in yChanks)
-                //{
-                //    var sx_strBinary = _helper.SX(string.Join("", yChank));
-                //    var sx = sx_strBinary.Select(n => int.Parse(n.ToString())).ToArray();
-                //    z.Add(sx);
-                //}
-
-                //z = _helper.Permutation(z);
                 result_round = OneRound(y);
             }
             result_round = _logicrithmetic.XOR(roundKeys.Last(), result_round);
